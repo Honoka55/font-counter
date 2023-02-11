@@ -3,6 +3,7 @@ from tkinter import filedialog
 from fontTools.ttLib import TTFont
 import os
 
+
 def open_font():
     file_path = filedialog.askopenfilename(defaultextension=".ttf",
                                            filetypes=[("Font", "*.ttf *.otf"),
@@ -11,7 +12,7 @@ def open_font():
         font = TTFont(file_path)
         characters = font['cmap'].getBestCmap().keys()
         valid_characters = set()
-        with open('Unicode/UnicodeData.txt', 'r') as f:
+        with open('Unicode/UnicodeData.txt', 'r', encoding='utf-8') as f:
             lines = f.readlines()
             index = 0
             while index < len(lines):
@@ -30,7 +31,7 @@ def open_font():
                     valid_characters.add(code)
                     index += 1
         blocks_info = {}
-        with open('Unicode/Blocks.txt', 'r') as f:
+        with open('Unicode/Blocks.txt', 'r', encoding='utf-8') as f:
             for line in f:
                 if line.startswith('#') or not line.strip():
                     continue
@@ -90,7 +91,7 @@ unicode_text_box = tk.Text(root, width=50, height=40)
 unicode_text_box.grid(row=3, column=0, padx=10)
 
 unicode_scroll_y = tk.Scrollbar(root, orient='vertical',
-                        command=unicode_text_box.yview)
+                                command=unicode_text_box.yview)
 unicode_scroll_y.grid(row=3, column=1, sticky='ns')
 unicode_text_box.config(yscrollcommand=unicode_scroll_y.set)
 
@@ -101,7 +102,7 @@ custom_text_box = tk.Text(root, width=50, height=40)
 custom_text_box.grid(row=3, column=2, padx=10)
 
 custom_scroll_y = tk.Scrollbar(root, orient='vertical',
-                         command=custom_text_box.yview)
+                               command=custom_text_box.yview)
 custom_scroll_y.grid(row=3, column=3, sticky='ns')
 custom_text_box.config(yscrollcommand=custom_scroll_y.set)
 
